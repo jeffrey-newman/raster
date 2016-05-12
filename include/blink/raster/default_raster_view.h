@@ -13,6 +13,8 @@
 #ifndef BLINK_RASTER_DEFAULT_RASTER_VIEW_H_AHZ
 #define BLINK_RASTER_DEFAULT_RASTER_VIEW_H_AHZ
 
+#include <cstddef>
+
 
 namespace blink {
   namespace raster {
@@ -24,11 +26,18 @@ namespace blink {
       using coordinate_type = typename Raster::coordinate_type;
       using value_type = typename Raster::value_type;
       using index_type = typename Raster::index_type;
-      using iterator = Iterator<typename Raster, IteratorArguments...>;
-      using const_iterator = Iterator<const typename Raster, IteratorArguments...>;
 
-      default_raster_view(Raster* r = std::nullptr_t) : m_raster(r)
-      {}
+    // Clang on MAcOS complains of using typename to specify that Raster is a type.
+//      using iterator = Iterator<typename Raster, IteratorArguments...>;
+//      using const_iterator = Iterator<const typename Raster, IteratorArguments...>;
+        using iterator = Iterator< Raster, IteratorArguments...>;
+        using const_iterator = Iterator<const  Raster, IteratorArguments...>;
+
+        // nullptr_t is a type, not an object.
+//      default_raster_view(Raster* r = std::nullptr_t) : m_raster(r)
+//      {}
+        default_raster_view(Raster* r = nullptr) : m_raster(r)
+        {}
 
       iterator begin()
       {

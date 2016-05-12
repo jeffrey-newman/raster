@@ -38,6 +38,8 @@
 
 #include <boost/filesystem.hpp> 
 #include <utility>
+// Need this for std::cout etc.
+#include <iostream>
 
 namespace blink {
   namespace raster {
@@ -241,11 +243,21 @@ namespace blink {
       {
         return m_gdal_dataset->GetRasterYSize();
       }
+        
+        index_type nRows() const
+        {
+          return m_gdal_dataset->GetRasterYSize();
+        }
 
       index_type size2() const
       {
         return m_gdal_dataset->GetRasterXSize();
       }
+        
+        index_type nCols() const
+        {
+            return m_gdal_dataset->GetRasterXSize();
+        }
 
       // Pixel access
       //
@@ -291,6 +303,11 @@ namespace blink {
       {
         return m_gdal_dataset;
       }
+        
+        const GDALRasterBand*  get_gdal_band() const
+        {
+            return m_gdal_rasterband;
+        }
 
     private:
       void initialize()

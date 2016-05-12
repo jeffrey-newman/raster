@@ -61,7 +61,8 @@ namespace blink {
       template<class Raster>
       struct gdal_iterator_helper
       {
-        using value = raster_traits::value_type<typename Raster>;
+        // Macos Clang complains about specifying Raster as typename
+        using value = raster_traits::value_type<Raster>;
         using access = boost::random_access_traversal_tag;
         using difference = std::ptrdiff_t;
 
@@ -80,13 +81,17 @@ namespace blink {
 
     template<class Raster>
     class gdal_iterator
-      : public detail::gdal_iterator_helper<typename Raster>::facade
+      // Macos Clang complains about specifying Raster as typename: "expected qualified name after "Typename"
+      : public detail::gdal_iterator_helper<Raster>::facade
     {
     private:
-      using helper = detail::gdal_iterator_helper<typename Raster>;
-      using this_type = gdal_iterator<typename Raster>;
+        // Macos Clang complains about specifying Raster as typename
+      using helper = detail::gdal_iterator_helper<Raster>;
+        // Macos Clang complains about specifying Raster as typename
+      using this_type = gdal_iterator<Raster>;
     public:
-      using raster_type = typename Raster;
+        // Macos Clang complains about specifying Raster as typename
+      using raster_type = Raster;
       using value_type = raster_traits::value_type<Raster>;
       using coordinate_type = raster_traits::coordinate_type<Raster>;
       using index_type = raster_traits::index_type<Raster>;
@@ -110,7 +115,10 @@ namespace blink {
       }
 
     private:
-      friend struct reference;
+    // Macos clang complains of "reference": error: elaborated type refers to a type alias
+//      friend struct reference;
+        friend struct dereference_proxy<this_type, value_type>;
+        
       value_type get() const
       {
         return	raster_operations::get_pixel_in_block(*m_raster, m_major_index,
@@ -253,14 +261,15 @@ namespace blink {
 
     template<typename Raster>
     class gdal_trans_iterator
-      : public detail::gdal_iterator_helper<typename Raster>::trans_facade
+      //Macos clang complains of prespecifying Raster as typename
+      : public detail::gdal_iterator_helper<Raster>::trans_facade
     {
     private:
-      using helper = detail::gdal_iterator_helper<typename Raster>;
-      using this_type = gdal_trans_iterator<typename Raster>;
+      using helper = detail::gdal_iterator_helper<Raster>;
+      using this_type = gdal_trans_iterator<Raster>;
 
     public:
-      using raster_type = typename Raster;
+      using raster_type = Raster;
       using value_type = raster_traits::value_type<Raster>;
       using coordinate_type = raster_traits::coordinate_type<Raster>;
       using index_type = raster_traits::index_type<Raster>;
@@ -306,8 +315,10 @@ namespace blink {
         return m_coordinates;
       }
     private:
+        // Macos clang complains of "reference": error: elaborated type refers to a type alias
+        //      friend struct reference;
+        friend struct dereference_proxy<this_type, value_type>;
 
-      friend struct reference;
       value_type get() const
       {
         return	raster_operations::get_pixel_in_block(*m_raster, m_major_index,
@@ -323,7 +334,10 @@ namespace blink {
     private:
 
       friend class boost::iterator_core_access;
-      friend struct reference;
+        // Macos clang complains of "reference": error: elaborated type refers to a type alias
+        //      friend struct reference;
+        friend struct dereference_proxy<this_type, value_type>;
+
 
 
       void decrement()
