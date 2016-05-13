@@ -9,8 +9,10 @@
 
 #include <blink/raster/gdal_raster.h>
 
-#include <gdal.h>
-#include <gdal_priv.h>
+//#include <gdal.h>
+//#include <gdal_priv.h>
+#include <GDAL/gdal.h>
+#include <GDAL/gdal_priv.h>
 #include <boost/filesystem.hpp>
 #include <iostream>
 
