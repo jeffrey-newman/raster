@@ -65,54 +65,54 @@ namespace blink {
 
       GDALDataset* create_standard_gdaldataset(
         const boost::filesystem::path& path, int rows, int cols
-        , GDALDataType datatype, int nBands = 1)
-      {
-        GDALAllRegister();
-
-        GDALDriverManager* m = GetGDALDriverManager();
-        GDALDriver* driver = m->GetDriverByName("GTiff");
-
-        char **papszOptions = NULL;
-        papszOptions = CSLSetNameValue(papszOptions, "BLOCKXSIZE", "256");
-        papszOptions = CSLSetNameValue(papszOptions, "BLOCKYSIZE", "256");
-        papszOptions = CSLSetNameValue(papszOptions, "TILED", "YES");
-        papszOptions = CSLSetNameValue(papszOptions, "COMPRESS", "DEFLATE");
-
-        GDALDataset* dataset = driver->Create(path.string().c_str(), cols, rows
-          , nBands, datatype, papszOptions);
-        return dataset;
-      }
+                                               , GDALDataType datatype, int nBands = 1);
+//      {
+//        GDALAllRegister();
+//
+//        GDALDriverManager* m = GetGDALDriverManager();
+//        GDALDriver* driver = m->GetDriverByName("GTiff");
+//
+//        char **papszOptions = NULL;
+//        papszOptions = CSLSetNameValue(papszOptions, "BLOCKXSIZE", "256");
+//        papszOptions = CSLSetNameValue(papszOptions, "BLOCKYSIZE", "256");
+//        papszOptions = CSLSetNameValue(papszOptions, "TILED", "YES");
+//        papszOptions = CSLSetNameValue(papszOptions, "COMPRESS", "DEFLATE");
+//
+//        GDALDataset* dataset = driver->Create(path.string().c_str(), cols, rows
+//          , nBands, datatype, papszOptions);
+//        return dataset;
+//      }
 
       GDALDataset* create_standard_gdaldataset_from_model(
         const boost::filesystem::path& path, const GDALDataset* model
-        , GDALDataType datatype, int nBands = 1)
-      {
-        int rows = const_cast<GDALDataset*>(model)->GetRasterYSize();
-        int cols = const_cast<GDALDataset*>(model)->GetRasterXSize();
+                                                          , GDALDataType datatype, int nBands = 1);
+//      {
+//        int rows = const_cast<GDALDataset*>(model)->GetRasterYSize();
+//        int cols = const_cast<GDALDataset*>(model)->GetRasterXSize();
+//
+//        GDALDataset* dataset = create_standard_gdaldataset(path, rows, cols
+//          , datatype, nBands);
+//
+//        if (dataset == NULL) return NULL;
+//
+//        double gt_data[6];
+//        double* geotransform = gt_data;
+//        CPLErr error_status 
+//          = const_cast<GDALDataset*>(model)->GetGeoTransform(geotransform);
+//        dataset->SetGeoTransform(geotransform);
+//        dataset->SetProjection(
+//          const_cast<GDALDataset*>(model)->GetProjectionRef());
+//        return dataset;
+//      }
 
-        GDALDataset* dataset = create_standard_gdaldataset(path, rows, cols
-          , datatype, nBands);
-
-        if (dataset == NULL) return NULL;
-
-        double gt_data[6];
-        double* geotransform = gt_data;
-        CPLErr error_status 
-          = const_cast<GDALDataset*>(model)->GetGeoTransform(geotransform);
-        dataset->SetGeoTransform(geotransform);
-        dataset->SetProjection(
-          const_cast<GDALDataset*>(model)->GetProjectionRef());
-        return dataset;
-      }
-
-      boost::filesystem::path get_temp_tiff_path()
-      {
-        boost::filesystem::path temp_path 
-          = boost::filesystem::temp_directory_path();
-        boost::filesystem::path unique_temp_path_model 
-          = temp_path /= "%%%%-%%%%-%%%%-%%%%.tif";
-        return unique_path(unique_temp_path_model);
-      }
+       boost::filesystem::path get_temp_tiff_path();
+//      {
+//        boost::filesystem::path temp_path 
+//          = boost::filesystem::temp_directory_path();
+//        boost::filesystem::path unique_temp_path_model 
+//          = temp_path /= "%%%%-%%%%-%%%%-%%%%.tif";
+//        return unique_path(unique_temp_path_model);
+//      }
 
       struct gdal_makers
       {
@@ -176,39 +176,39 @@ namespace blink {
   
     template<typename T>
     gdal_raster<T> open_gdal_raster(const boost::filesystem::path& path
-      , GDALAccess access, int band = 1)
-    {
-      return detail::gdal_makers::open_gdal_raster<T>(path, access, band);
-    }
+                                    , GDALAccess access, int band = 1);
+//    {
+//      return detail::gdal_makers::open_gdal_raster<T>(path, access, band);
+//    }
 
     template<typename T>
     gdal_raster<T> create_gdal_raster(const boost::filesystem::path& path
-      , int rows, int cols, GDALDataType datatype = native_gdal_data_type<T>::type)
-    {
-      return detail::gdal_makers::create_gdal_raster<T>(path, rows, cols, datatype);
-    }
+                                      , int rows, int cols, GDALDataType datatype = native_gdal_data_type<T>::type);
+//    {
+//      return detail::gdal_makers::create_gdal_raster<T>(path, rows, cols, datatype);
+//    }
 
     template<typename T, typename U>
     gdal_raster<T> create_gdal_raster_from_model(
       const boost::filesystem::path& path, const gdal_raster<U>& model, 
-      GDALDataType datatype = native_gdal_data_type<T>::type)
-    {
-      return detail::gdal_makers::create_gdal_raster_from_model<T>(path, model,
-        datatype);
-    }
+                                                 GDALDataType datatype = native_gdal_data_type<T>::type);
+//    {
+//      return detail::gdal_makers::create_gdal_raster_from_model<T>(path, model,
+//        datatype);
+//    }
 
     template<typename T>
-    gdal_raster<T> create_temp_gdal_raster(int rows, int cols, GDALDataType datatype = native_gdal_data_type<T>::type)
-    {
-      return detail::gdal_makers::create_temp_gdal_raster<T>(rows, cols, datatype);
-    }
+      gdal_raster<T> create_temp_gdal_raster(int rows, int cols, GDALDataType datatype = native_gdal_data_type<T>::type);
+//    {
+//      return detail::gdal_makers::create_temp_gdal_raster<T>(rows, cols, datatype);
+//    }
 
     template<typename T, typename U>
-    gdal_raster<T> create_temp_gdal_raster_from_model(const gdal_raster<U>& model, GDALDataType datatype = native_gdal_data_type<T>::type)
-    {
-      return detail::gdal_makers::create_temp_gdal_raster_from_model<T>(model,
-        datatype);
-    }
+      gdal_raster<T> create_temp_gdal_raster_from_model(const gdal_raster<U>& model, GDALDataType datatype = native_gdal_data_type<T>::type);
+//    {
+//      return detail::gdal_makers::create_temp_gdal_raster_from_model<T>(model,
+//        datatype);
+//    }
   }
 }
 #endif

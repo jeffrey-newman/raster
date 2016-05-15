@@ -191,7 +191,9 @@ namespace blink {
 
       //! The global block_cache. This is a block cache with default size that can
       //! be used as a default when none is provided.
-      static block_cache g_block_cache;
+        // JN moved to cpp file as compilor complains of duplicate symbol. Could also add static, but
+        // unsure what the effect of this. Perhaps safer to have a block_cache 
+        extern block_cache g_block_cache;
 
       //! The block manager keeps track to see which blocks of a GDALRasterBand are 
       //! in the cache, 
