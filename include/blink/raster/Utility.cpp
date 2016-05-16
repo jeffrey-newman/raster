@@ -80,6 +80,10 @@ namespace blink {
         gdal_raster<int> open_gdal_raster(const boost::filesystem::path& path
                                              , GDALAccess access, int band);
         
+        template
+        gdal_raster<float> open_gdal_raster(const boost::filesystem::path& path
+                                          , GDALAccess access, int band);
+        
         template<typename T>
         gdal_raster<T> create_gdal_raster(const boost::filesystem::path& path
                                           , int rows, int cols, GDALDataType datatype)
@@ -95,6 +99,20 @@ namespace blink {
             return detail::gdal_makers::create_gdal_raster_from_model<T>(path, model,
                                                                          datatype);
         }
+        
+        template
+        gdal_raster<int> create_gdal_raster_from_model(
+                                                     const boost::filesystem::path& path, const gdal_raster<int>& model,
+                                                       GDALDataType datatype);
+        template
+        gdal_raster<double> create_gdal_raster_from_model(
+                                                       const boost::filesystem::path& path, const gdal_raster<double>& model,
+                                                       GDALDataType datatype);
+        
+        template
+        gdal_raster<float> create_gdal_raster_from_model(
+                                                          const boost::filesystem::path& path, const gdal_raster<float>& model,
+                                                          GDALDataType datatype);
         
         template<typename T>
         gdal_raster<T> create_temp_gdal_raster(int rows, int cols, GDALDataType datatype)
