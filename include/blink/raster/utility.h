@@ -9,10 +9,15 @@
 
 #include <blink/raster/gdal_raster.h>
 
-//#include <gdal.h>
-//#include <gdal_priv.h>
+
+#ifdef WITH_MAC_FRAMEWORK
 #include <GDAL/gdal.h>
 #include <GDAL/gdal_priv.h>
+#else
+#include <gdal.h>
+#include <gdal_priv.h>
+#endif
+
 #include <boost/filesystem.hpp>
 #include <iostream>
 

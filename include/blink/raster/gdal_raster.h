@@ -28,15 +28,22 @@
 #include <blink/raster/raster_iterator.h>
 #include <blink/raster/raster_traits.h>
 
-//#include <cpl_string.h> // part of GDAL
-//#include <gdal.h>       // part of GDAL
+
+#ifdef WITH_MAC_FRAMEWORK
 #include <GDAL/cpl_string.h> // part of GDAL
 #include <GDAL/gdal.h>       // part of GDAL
+#else
+#include <cpl_string.h> // part of GDAL
+#include <gdal.h>       // part of GDAL
+#endif
 
 #pragma warning( push )
 #pragma warning( disable : 4251 )
-//#include <gdal_priv.h>  // part of GDAL
+#ifdef WITH_MAC_FRAMEWORK
 #include <GDAL/gdal_priv.h>  // part of GDAL
+#else
+#include <gdal_priv.h>  // part of GDAL
+#endif
 #pragma warning( pop ) 
 
 #include <boost/filesystem.hpp> 

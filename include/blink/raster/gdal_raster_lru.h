@@ -24,13 +24,21 @@
 // JN froward slash required on macos
 #include <blink/raster/exceptions.h>
 
+#ifdef WITH_MAC_FRAMEWORK
 #include <GDAL/cpl_conv.h>
-//#include <cpl_conv.h>
+#else
+#include <cpl_conv.h>
+#endif
 
 #pragma warning( push )
 #pragma warning( disable : 4251 )//std::vector needs to have dll-interface 
-//#include <gdal_priv.h>
+#ifdef WITH_MAC_FRAMEWORK
 #include <GDAL/gdal_priv.h>
+#else
+#include <gdal_priv.h>
+#endif
+
+
 #pragma warning( pop )
 
 #include <boost/optional.hpp>
