@@ -288,6 +288,12 @@ namespace blink {
        void* buf = get_buf_for_writing(get_major_index(coord));
        return put_pixel(value, buf, get_minor_index(coord));
       }
+        
+        void put(std::initializer_list<int> numbers, const T& value)
+        {
+            coordinate_type coord(numbers);
+            return this->put(coord, value);
+        }
 
 //   private: // should be private??
 //    template<class> friend class gdal_iterator;
