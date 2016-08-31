@@ -15,6 +15,7 @@
 #define BLINK_RASTER_COORDINATE_2D_H_AHZ
 
 #include <cstddef> //ptrdiff_t
+#include <initializer_list>
 
 namespace blink {
   namespace raster {
@@ -28,6 +29,17 @@ namespace blink {
       // default constructor
       coordinate_2d(index_type r = 0, index_type c = 0) : row(r), col(c)
       {}
+        
+        coordinate_2d(std::initializer_list<int> numbers)
+        {
+            int k = 0;
+            for(auto i = numbers.begin(); i != numbers.end(); i++)
+            {
+                if(k == 0) row = *i;
+                if (k == 1) col = *i;
+                k++;
+            }
+        }
 
       this_type& operator+=(const coordinate_2d& that)
       {

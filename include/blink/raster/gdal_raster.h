@@ -276,6 +276,12 @@ namespace blink {
         const void* buf = get_buf(get_major_index(coord));
         return get_pixel(buf, get_minor_index(coord));
       }
+        
+        T get(std::initializer_list<int> numbers) const
+        {
+            coordinate_type coord(numbers);
+            return this->get(coord);
+        }
       
       void put(const coordinate_type& coord, const T& value)
       {
