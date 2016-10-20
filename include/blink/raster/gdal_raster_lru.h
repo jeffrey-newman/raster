@@ -78,6 +78,7 @@ namespace blink {
         ~block()
         {
           if (m_is_dirty) {
+//              GDALAccess type = m_gdal_rasterband->GetAccess();
             if (m_gdal_rasterband->GetAccess() != GA_Update) {
               BOOST_THROW_EXCEPTION(writing_to_raster_failed{});
             };
@@ -163,7 +164,8 @@ namespace blink {
           m_cache.erase(iter); // iter is deleted by now
         }
 
-        //! removes blocks from cache until there is space for this new one. Then 
+        //! removes blocks from cache until there is
+        // Load maps into memory space for this new one. Then
         //! makes it. 
         //! \param row major row index
         //! \param col major col index

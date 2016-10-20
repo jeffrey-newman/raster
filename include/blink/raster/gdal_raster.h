@@ -101,6 +101,9 @@ namespace blink {
           BOOST_THROW_EXCEPTION(opening_raster_failed{});
         }
         initialize();
+//        m_access_type_bck = m_gdal_dataset->GetAccess();
+//        std::cout << "requested " << m_access_type << " got: " << m_access_type_bck << std::endl;
+//        std::cout << std::endl;
       }
  
       // Constructor opens from opened GDALDataset
@@ -319,6 +322,14 @@ namespace blink {
             return m_gdal_rasterband;
         }
 
+        boost::optional<T> noDataVal() const
+        {
+            int success = 0;
+            T no_data_val = const_cast<GDALRasterBand *>(this->get_gdal_band())->GetNoDataValue(&success);
+            if (success == 0) return (boost::none);
+            return (no_data_val);
+        }
+
     private:
       void initialize()
       {
@@ -470,6 +481,7 @@ namespace blink {
       index_type m_block_size1;
       index_type m_block_size2;
       GDALAccess m_access_type;
+      GDALAccess m_access_type_bck;
       bool m_delete_on_close;
       boost::filesystem::path m_file_path;
 
