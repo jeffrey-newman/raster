@@ -110,6 +110,11 @@ namespace blink {
                                                        GDALDataType datatype);
         
         template
+        gdal_raster<double> create_gdal_raster_from_model(
+                                                          const boost::filesystem::path& path, const gdal_raster<int>& model,
+                                                          GDALDataType datatype);
+        
+        template
         gdal_raster<float> create_gdal_raster_from_model(
                                                           const boost::filesystem::path& path, const gdal_raster<float>& model,
                                                           GDALDataType datatype);
@@ -125,6 +130,73 @@ namespace blink {
         {
             return detail::gdal_makers::create_temp_gdal_raster_from_model<T>(model,
                                                                               datatype);
+        }
+        
+        template<typename T>
+        boost::shared_ptr<gdal_raster<T> > open_gdal_rasterSPtr(const boost::filesystem::path& path
+                                                                , GDALAccess access, int band)
+        {
+            return detail::gdal_makers::open_gdal_rasterSPtr<T>(path, access, band);
+        }
+        
+        template
+        boost::shared_ptr<gdal_raster<double> > open_gdal_rasterSPtr(const boost::filesystem::path& path
+                                                 , GDALAccess access, int band);
+        
+        template
+        boost::shared_ptr<gdal_raster<int> > open_gdal_rasterSPtr(const boost::filesystem::path& path
+                                              , GDALAccess access, int band);
+        
+        template
+        boost::shared_ptr<gdal_raster<float> > open_gdal_rasterSPtr(const boost::filesystem::path& path
+                                                , GDALAccess access, int band);
+        
+        template<typename T>
+        boost::shared_ptr<gdal_raster<T> > create_gdal_rasterSPtr(const boost::filesystem::path& path
+                                                                  , int rows, int cols, GDALDataType datatype)
+        {
+            return detail::gdal_makers::create_gdal_rasterSPtr<T>(path, rows, cols, datatype);
+        }
+        
+        template<typename T, typename U>
+        boost::shared_ptr<gdal_raster<T> > create_gdal_rasterSPtr_from_model(
+                                                                             const boost::filesystem::path& path, const gdal_raster<U>& model,
+                                                                             GDALDataType datatype)
+        {
+            return detail::gdal_makers::create_gdal_rasterSPtr_from_model<T>(path, model,
+                                                                             datatype);
+        }
+        
+        template
+        boost::shared_ptr<gdal_raster<int> > create_gdal_rasterSPtr_from_model(
+                                                           const boost::filesystem::path& path, const gdal_raster<int>& model,
+                                                           GDALDataType datatype);
+        template
+        boost::shared_ptr<gdal_raster<double> > create_gdal_rasterSPtr_from_model(
+                                                              const boost::filesystem::path& path, const gdal_raster<double>& model,
+                                                              GDALDataType datatype);
+        
+        template
+        boost::shared_ptr<gdal_raster<double> > create_gdal_rasterSPtr_from_model(
+                                                              const boost::filesystem::path& path, const gdal_raster<int>& model,
+                                                              GDALDataType datatype);
+        
+        template
+        boost::shared_ptr<gdal_raster<float> > create_gdal_rasterSPtr_from_model(
+                                                             const boost::filesystem::path& path, const gdal_raster<float>& model,
+                                                             GDALDataType datatype);
+        
+        template<typename T>
+        boost::shared_ptr<gdal_raster<T> > create_temp_gdal_rasterSPtr(int rows, int cols, GDALDataType datatype)
+        {
+            return detail::gdal_makers::create_temp_gdal_rasterSPtr<T>(rows, cols, datatype);
+        }
+        
+        template<typename T, typename U>
+        boost::shared_ptr<gdal_raster<T> > create_temp_gdal_rasterSPtr_from_model(const gdal_raster<U>& model, GDALDataType datatype)
+        {
+            return detail::gdal_makers::create_temp_gdal_rasterSPtr_from_model<T>(model,
+                                                                                  datatype);
         }
         
     }
