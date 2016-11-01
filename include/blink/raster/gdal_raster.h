@@ -413,6 +413,8 @@ namespace blink {
           m_gdal_rasterband->ComputeStatistics(FALSE, &min, &max, &mean, &stddev
             , NULL, NULL);
           m_gdal_rasterband->SetStatistics(min, max, mean, stddev);
+            int anOverviewList[5]={2, 4, 6, 8, 16};
+            m_gdal_dataset->BuildOverviews("NEAREST", 5, anOverviewList, 0, NULL, GDALDummyProgress, NULL);
         }
 
         if (m_gdal_dataset) {

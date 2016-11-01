@@ -126,7 +126,7 @@ namespace blink {
       public:
         //! Use the constructor to reserve memory capacity
         //! \param capacity the amount of memory to reserve in bytes
-        block_cache(size_t capacity = 2e8) : m_capacity(capacity), m_size(0)
+        block_cache(size_t capacity = 2e9) : m_capacity(capacity), m_size(0)
         {}
 
         block_cache(block_cache&& that)

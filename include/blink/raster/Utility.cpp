@@ -8,6 +8,7 @@
 
 #include <stdio.h>
 #include "utility.h"
+#include "cpl_conv.h"
 
 namespace blink {
     namespace raster {
@@ -26,7 +27,12 @@ namespace blink {
                 papszOptions = CSLSetNameValue(papszOptions, "BLOCKXSIZE", "256");
                 papszOptions = CSLSetNameValue(papszOptions, "BLOCKYSIZE", "256");
                 papszOptions = CSLSetNameValue(papszOptions, "TILED", "YES");
-                papszOptions = CSLSetNameValue(papszOptions, "COMPRESS", "DEFLATE");
+                papszOptions = CSLSetNameValue(papszOptions, "COMPRESS", "LZW");
+                papszOptions = CSLSetNameValue(papszOptions, "BIGTIFF", "YES");
+                
+                CPLSetConfigOption( "GDAL_TIFF_INTERNAL_MASK", "NO" );
+                CPLSetConfigOption( "TIFF_USE_OVR", "YES" );
+
                 
                 GDALDataset* dataset = driver->Create(path.string().c_str(), cols, rows
                                                       , nBands, datatype, papszOptions);
@@ -90,6 +96,20 @@ namespace blink {
         {
             return detail::gdal_makers::create_gdal_raster<T>(path, rows, cols, datatype);
         }
+        
+        template
+        gdal_raster<int> create_gdal_raster(const boost::filesystem::path& path
+                                            , int rows, int cols, GDALDataType datatype);
+        
+        template
+        gdal_raster<float> create_gdal_raster(const boost::filesystem::path& path
+                                            , int rows, int cols, GDALDataType datatype);
+        
+        template
+        gdal_raster<double> create_gdal_raster(const boost::filesystem::path& path
+                                            , int rows, int cols, GDALDataType datatype);
+        
+
         
         template<typename T, typename U>
         gdal_raster<T> create_gdal_raster_from_model(
@@ -158,6 +178,20 @@ namespace blink {
             return detail::gdal_makers::create_gdal_rasterSPtr<T>(path, rows, cols, datatype);
         }
         
+        template
+        boost::shared_ptr<gdal_raster<int> > create_gdal_rasterSPtr(const boost::filesystem::path& path
+                                                                    , int rows, int cols, GDALDataType datatype);
+        
+        template
+        boost::shared_ptr<gdal_raster<float> > create_gdal_rasterSPtr(const boost::filesystem::path& path
+                                                                    , int rows, int cols, GDALDataType datatype);
+        
+        template
+        boost::shared_ptr<gdal_raster<double> > create_gdal_rasterSPtr(const boost::filesystem::path& path
+                                                                      , int rows, int cols, GDALDataType datatype);
+        
+        
+        
         template<typename T, typename U>
         boost::shared_ptr<gdal_raster<T> > create_gdal_rasterSPtr_from_model(
                                                                              const boost::filesystem::path& path, const gdal_raster<U>& model,
@@ -185,6 +219,11 @@ namespace blink {
         boost::shared_ptr<gdal_raster<float> > create_gdal_rasterSPtr_from_model(
                                                              const boost::filesystem::path& path, const gdal_raster<float>& model,
                                                              GDALDataType datatype);
+        
+        template
+        boost::shared_ptr<gdal_raster<int32_t> > create_gdal_rasterSPtr_from_model(
+                                                                                 const boost::filesystem::path& path, const gdal_raster<float>& model,
+                                                                                 GDALDataType datatype);
         
         template<typename T>
         boost::shared_ptr<gdal_raster<T> > create_temp_gdal_rasterSPtr(int rows, int cols, GDALDataType datatype)

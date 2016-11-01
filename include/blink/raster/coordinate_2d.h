@@ -16,6 +16,7 @@
 
 #include <cstddef> //ptrdiff_t
 #include <initializer_list>
+#include <boost/serialization/serialization.hpp>
 
 namespace blink {
   namespace raster {
@@ -36,7 +37,7 @@ namespace blink {
             for(auto i = numbers.begin(); i != numbers.end(); i++)
             {
                 if(k == 0) row = *i;
-                if (k == 1) col = *i;
+                if(k == 1) col = *i;
                 k++;
             }
         }
@@ -107,6 +108,18 @@ namespace blink {
 
       index_type row;
       index_type col;
+        
+    private:
+        friend class boost::serialization::access;
+        // When the class Archive corresponds to an output archive, the
+        // & operator is defined similar to <<.  Likewise, when the class Archive
+        // is a type of input archive the & operator is defined similar to >>.
+        template<class Archive>
+        void serialize(Archive & ar, const unsigned int version)
+        {
+            ar & row;
+            ar & col;
+        }
     };
   }
 } //namespace moving_window
