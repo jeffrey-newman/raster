@@ -341,6 +341,15 @@ namespace blink {
             if (success == 0) return (boost::none);
             return (no_data_val);
         }
+        
+        void setNoDataVal(T val) const
+        {
+            int success = 0;
+            const_cast<GDALRasterBand *>(this->get_gdal_band())->SetNoDataValue(val);
+//            T no_data_val = const_cast<GDALRasterBand *>(this->get_gdal_band())->GetNoDataValue(&success);
+//            if (success == 0) return (boost::none);
+//            return (no_data_val);
+        }
 
     private:
       void initialize()

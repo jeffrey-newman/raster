@@ -46,3 +46,4 @@ raster.sln
 *.suo
 raster.vcxproj
 *.user
+/.project

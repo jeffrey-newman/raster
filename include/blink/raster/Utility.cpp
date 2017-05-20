@@ -151,6 +151,33 @@ namespace blink {
             return detail::gdal_makers::create_temp_gdal_raster_from_model<T>(model,
                                                                               datatype);
         }
+
+       template
+        gdal_raster<double> create_temp_gdal_raster_from_model(const gdal_raster<double>& model, GDALDataType datatype);
+
+        template
+        gdal_raster<int> create_temp_gdal_raster_from_model(const gdal_raster<double>& model, GDALDataType datatype);
+
+        template
+        gdal_raster<float> create_temp_gdal_raster_from_model(const gdal_raster<double>& model, GDALDataType datatype);
+
+        template
+        gdal_raster<double> create_temp_gdal_raster_from_model(const gdal_raster<int>& model, GDALDataType datatype);
+
+        template
+        gdal_raster<int> create_temp_gdal_raster_from_model(const gdal_raster<int>& model, GDALDataType datatype);
+
+        template
+        gdal_raster<float> create_temp_gdal_raster_from_model(const gdal_raster<int>& model, GDALDataType datatype);
+
+        template
+        gdal_raster<double> create_temp_gdal_raster_from_model(const gdal_raster<float>& model, GDALDataType datatype);
+
+        template
+        gdal_raster<int> create_temp_gdal_raster_from_model(const gdal_raster<float>& model, GDALDataType datatype);
+
+        template
+        gdal_raster<float> create_temp_gdal_raster_from_model(const gdal_raster<float>& model, GDALDataType datatype);
         
         template<typename T>
         boost::shared_ptr<gdal_raster<T> > open_gdal_rasterSPtr(const boost::filesystem::path& path
